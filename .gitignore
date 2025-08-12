@@ -1,0 +1,27 @@
+# ASP.NET Core
+bin/
+obj/
+*.db
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Node/Vite/React
+node_modules/
+dist/
+build/
+.env
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Others
+wwwroot/images/
