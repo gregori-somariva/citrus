@@ -1,11 +1,20 @@
-import ItemCard from "./components/ItemCard";
+import ProductCard from "./components/ProductCard";
+import ComponentCarousel from "./components/ComponentCarousel";
 
 function App() {
-  return (
+  const itemArray = [{
+    itemName: 'aa',
+    itemDescription: 'dsadsa',
+    itemPrice: 'R$45,50'
+  }];
 
-    <div className="min-h-screen bg-black text-gray-200 p-6">
-      <ItemCard></ItemCard>
+  return (
+    <div className="min-h-screen bg-white">
+        <ProductCard item={itemArray[0]}></ProductCard>
+
+        <ComponentCarousel itemArray={itemArray}></ComponentCarousel>
     </div>
+    
   );
 }
 
