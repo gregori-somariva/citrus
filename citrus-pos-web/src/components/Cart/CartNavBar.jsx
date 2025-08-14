@@ -25,6 +25,4 @@ function CartNavBar({ cartProducts = [] }) {
     </aside>
   );
 }
-
-
 export default CartNavBar;

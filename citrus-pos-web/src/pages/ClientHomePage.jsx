@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import ProductCategoryNav from '../components/Product/ProductCategoryNav';
 import ProductCategoryContainer from '../components/Product/ProductCategoryContainer';
 
-function ClientHomePage({addToCart}) {
+function ClientHomePage({ openProductModal }) {
   const [productArray, setProductArray] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
 
@@ -28,7 +28,6 @@ function ClientHomePage({addToCart}) {
 
   return (
     <div className="flex flex-col w-full items-center">
-      
       <ProductCategoryNav
         productArray={productArray}
         onSelectCategory={setSelectedCategoryId}
@@ -37,7 +36,7 @@ function ClientHomePage({addToCart}) {
 
       <ProductCategoryContainer 
         productArray={filteredProducts} 
-        addToCart={addToCart}
+        openProductModal={openProductModal}
       />
     </div>
   );

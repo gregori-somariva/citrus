@@ -7,16 +7,17 @@ namespace Citrus.Models
     {
         public int OrderItemId { get; set; }
 
-        public Order? Order { get; set; } // Navigation property for the "Order" table
-        public int OrderId { get; set; } // Foreign key with the "Order" table
+        public Order? Order { get; set; }
+        public int OrderId { get; set; }
 
-        public Product? Product { get; set; } // Navigation property for the "Product" table
-        public int ProductId { get; set; } // Foreign key with the "Product" table
+        public Product? Product { get; set; }
+        public int ProductId { get; set; }
 
-        public List<ProductAddon> ProductAddons { get; set; } = [];
+        public List<OrderItemAddon> Addons { get; set; } = new();
 
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }
     }
+
 }
