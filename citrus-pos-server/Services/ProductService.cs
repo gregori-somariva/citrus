@@ -25,7 +25,7 @@ namespace Citrus.Services
 
         public async Task<ServiceResponse<List<ProductDto>>> GetAllAsync()
         {
-            var products = await _context.Products.Include(p => p.ProductCategory).ToListAsync();
+            var products = await _context.Products.Include(p => p.ProductCategory).Include(p => p.ProductAddons).ToListAsync();
 
             var dtos = products.Select(p => new ProductDto
             {
@@ -33,7 +33,6 @@ namespace Citrus.Services
                 Name = p.Name,
                 Description = p.Description,
                 ImageUrl = p.ImageUrl,
-                ProductCategoryId = p.ProductCategoryId,
                 Price = p.Price,
                 Stock = p.Stock,
                 CreatedAt = p.CreatedAt,
@@ -42,7 +41,17 @@ namespace Citrus.Services
                 {
                     ProductCategoryId = p.ProductCategory.ProductCategoryId,
                     Name = p.ProductCategory.Name
-                }
+                },
+                ProductAddons = p.ProductAddons?.Select(a => new ProductAddonDto
+                {
+                    ProductAddonId = a.ProductAddonId,
+                    Name  = a.Name,
+                    Description = a.Description,
+                    Price = a.Price,
+                    ImageUrl = a.ImageUrl,
+                    CreatedAt = a.CreatedAt,
+                    UpdatedAt = a.UpdatedAt,
+                }).ToList() ?? new List<ProductAddonDto>()
             }).ToList();
             
             return ServiceResponse<List<ProductDto>>.SuccessResponse(dtos);

@@ -29,19 +29,7 @@ namespace Citrus.Services
             var dtoList = categories.Select(c => new ProductCategoryDto
             {
                 ProductCategoryId = c.ProductCategoryId,
-                Name = c.Name,
-                Products = c.Products.Select(p => new ProductDto
-                {
-                    ProductId = p.ProductId,
-                    Name = p.Name,
-                    Description = p.Description,
-                    ImageUrl = p.ImageUrl,
-                    ProductCategoryId = p.ProductCategoryId,
-                    Price = p.Price,
-                    Stock = p.Stock,
-                    CreatedAt = p.CreatedAt,
-                    UpdatedAt = p.UpdatedAt
-                }).ToList()
+                Name = c.Name
             }).ToList();
             
             return ServiceResponse<List<ProductCategoryDto>>.SuccessResponse(dtoList);

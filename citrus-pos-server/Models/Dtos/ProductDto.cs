@@ -12,5 +12,6 @@ namespace Citrus.Models.Dtos
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public ProductCategoryDto? ProductCategory { get; set; }
+        public List<ProductAddonDto>? ProductAddons { get; set; }
     }
 }
