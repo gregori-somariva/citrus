@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Citrus.Migrations
 {
     [DbContext(typeof(SqliteDbContext))]
-    [Migration("20250812141042_ProductCategoryTable")]
-    partial class ProductCategoryTable
+    [Migration("20250814213247_FixProductAddonModel")]
+    partial class FixProductAddonModel
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,6 +32,9 @@ namespace Citrus.Migrations
                     b.Property<string>("IPAddress")
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("TEXT");
 
@@ -39,10 +42,6 @@ namespace Citrus.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -107,6 +106,36 @@ namespace Citrus.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("OrderItems");
+                });
+
+            modelBuilder.Entity("Citrus.Models.OrderItemAddon", b =>
+                {
+                    b.Property<int>("OrderItemAddonId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("OrderItemId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProductAddonId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("OrderItemAddonId");
+
+                    b.HasIndex("OrderItemId");
+
+                    b.HasIndex("ProductAddonId");
+
+                    b.ToTable("OrderItemAddons");
                 });
 
             modelBuilder.Entity("Citrus.Models.Product", b =>
@@ -197,21 +226,6 @@ namespace Citrus.Migrations
                     b.ToTable("ProductCategories");
                 });
 
-            modelBuilder.Entity("OrderItemProductAddon", b =>
-                {
-                    b.Property<int>("OrderItemsOrderItemId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProductAddonsProductAddonId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("OrderItemsOrderItemId", "ProductAddonsProductAddonId");
-
-                    b.HasIndex("ProductAddonsProductAddonId");
-
-                    b.ToTable("OrderItemProductAddon");
-                });
-
             modelBuilder.Entity("Citrus.Models.Order", b =>
                 {
                     b.HasOne("Citrus.Models.Client", "Client")
@@ -242,6 +256,25 @@ namespace Citrus.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("Citrus.Models.OrderItemAddon", b =>
+                {
+                    b.HasOne("Citrus.Models.OrderItem", "OrderItem")
+                        .WithMany("Addons")
+                        .HasForeignKey("OrderItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Citrus.Models.ProductAddon", "ProductAddon")
+                        .WithMany()
+                        .HasForeignKey("ProductAddonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrderItem");
+
+                    b.Navigation("ProductAddon");
+                });
+
             modelBuilder.Entity("Citrus.Models.Product", b =>
                 {
                     b.HasOne("Citrus.Models.ProductCategory", "ProductCategory")
@@ -264,24 +297,14 @@ namespace Citrus.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("OrderItemProductAddon", b =>
-                {
-                    b.HasOne("Citrus.Models.OrderItem", null)
-                        .WithMany()
-                        .HasForeignKey("OrderItemsOrderItemId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Citrus.Models.ProductAddon", null)
-                        .WithMany()
-                        .HasForeignKey("ProductAddonsProductAddonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Citrus.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
+                });
+
+            modelBuilder.Entity("Citrus.Models.OrderItem", b =>
+                {
+                    b.Navigation("Addons");
                 });
 
             modelBuilder.Entity("Citrus.Models.Product", b =>

@@ -13,7 +13,7 @@ namespace Citrus.Models
         public Product? Product { get; set; }
         public int ProductId { get; set; }
 
-        public List<OrderItemAddon> Addons { get; set; } = new();
+        public List<OrderItemAddon> Addons { get; set; } = [];
 
         public int Quantity { get; set; }
         public decimal UnitPrice { get; set; }
