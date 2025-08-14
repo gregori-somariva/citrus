@@ -1,6 +1,6 @@
 import ProductCard from './ProductCard'
 
-function ProductCategoryContainer({ productArray = [] }) {
+function ProductCategoryContainer({ productArray = [], addToCart }) {
 
   const groupedProductsByCategory = productArray.reduce((accumulator, product) => {
     const categoryName = product.productCategory.name;
@@ -15,7 +15,7 @@ function ProductCategoryContainer({ productArray = [] }) {
 
   return (
 
-    <div className="space-y-8 w-full p-6">
+    <div className="space-y-8 w-full p-6 overflow-auto">
 
       {Object.entries(groupedProductsByCategory).map(([categoryName, products]) => (
 
@@ -25,7 +25,13 @@ function ProductCategoryContainer({ productArray = [] }) {
 
           <div className="flex flex-wrap gap-4">
             {products.map(product => (
-              <ProductCard key={product.productId} product={product} variant="vertical" />
+
+              <ProductCard 
+                key={product.productId} 
+                product={product} 
+                variant="vertical" 
+                addToCart={addToCart}
+              />
             ))}
           </div>
 
